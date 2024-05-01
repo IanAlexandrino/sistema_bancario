@@ -52,7 +52,8 @@ while True:
             deposit = float(input("\nInforme o valor que vai ser depositado: "))
             if(deposit > 0):
                 balance += deposit
-                print(f"\nValor de R$ {deposit:.2f} inserido com sucesso na sua conta, atualmente você possui R$ {balance:.2f}")
+                print(f"\nValor de R$ {deposit:.2f} inserido com sucesso na sua conta!")
+                extract += f"\nDepósito: R$ {deposit:.2f}"
                 break
 
             else: 
@@ -60,7 +61,12 @@ while True:
 
 
     elif(menu_option == 3):
-        print(3)
+        if(len(extract) == 9):
+            print("\nNão foram realizadas movimentações!")
+
+        else:
+            print(extract)
+            print(f"\nSaldo atual: R$ {balance:.2f}")
 
     elif(menu_option == 0):
         print("Até a próxima!!!")
