@@ -2,7 +2,7 @@ extract = '''
 EXTRACT
 '''
 withdraw_amount = 3
-balance = 500.00
+balance = 0.00
 
 while True:
     print(
@@ -48,7 +48,16 @@ while True:
 
 
     elif(menu_option == 2):
-        print(2)
+        while True:
+            deposit = float(input("\nInforme o valor que vai ser depositado: "))
+            if(deposit > 0):
+                balance += deposit
+                print(f"\nValor de R$ {deposit:.2f} inserido com sucesso na sua conta, atualmente você possui R$ {balance:.2f}")
+                break
+
+            else: 
+                print("\nValor informado para depósito inválido, insira um valor válido!")
+
 
     elif(menu_option == 3):
         print(3)
