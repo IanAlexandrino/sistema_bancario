@@ -3,6 +3,8 @@ EXTRACT
 '''
 withdraw_amount = 3
 balance = 0.00
+users = {}
+accounts = {}
 
 def withdraw_method(*, balance, withdraw_amount, extract):
     if(balance > 0):
@@ -56,17 +58,56 @@ def extract_method(balance, /, extract):
         print(f"\nSaldo atual: R$ {balance:.2f}")
 
 
+def create_user(users: dict):
+    has_duplict_cpf = False
+    name = input("\nDigite o nome do usuário: ")
+    birth_date = input("Digite a data de nascimento(dia/mes/ano): ")
+    while True:
+        cpf_new = input("Digite o CPF(apenas números): ")
+        for user in users.values():
+            if (user["cpf"] == cpf_new):
+                has_duplict_cpf = True
+
+            else:
+                has_duplict_cpf = False
+
+
+        if(len(cpf_new) > 11 or len(cpf_new) < 11):
+            print("\nCPF inválido!\n")
+
+        elif(has_duplict_cpf == True):
+            print("\nCPF já existe!\n")
+
+        else:
+            break
+
+    
+    adress = input("Digite o endereço(logradouro-bairro-cidade/sigla estado): ")
+    new_user = {
+        "name" : name,
+        "birth_date" : birth_date,
+        "cpf" : cpf_new,
+        "adress" : adress
+    }
+    users[name] = new_user
+    print(f"\nUsuário {name} criado com sucesso!")
+
+def create_account():
+    print("asdasdfa")
+
 while True:
     print(
         '''
-        ############MENU############
-        #                          #
-        #        1. Saque          #
-        #        2. Depósito       #
-        #        3. Extrato        #
-        #        0. Sair           #
-        #                          #
-        ############################
+        ############MENU##############
+        #                            #
+        #        1. Saque            #
+        #        2. Depósito         #
+        #        3. Extrato          #
+        #        4. Criar Usuário    #
+        #        5. Criar Conta      #
+        #        0. Sair             #
+        #                            #
+        ##############################
         '''
     )
 
@@ -85,6 +126,9 @@ while True:
 
     elif(menu_option == 3):
         extract_method(balance, extract = extract)
+
+    elif(menu_option == 4):
+        create_user(users)
 
     elif(menu_option == 0):
         print("Até a próxima!!!")
