@@ -4,7 +4,9 @@ EXTRACT
 withdraw_amount = 3
 balance = 0.00
 users = {}
+user_count = 1
 accounts = {}
+account_count = 1
 
 def withdraw_method(*, balance, withdraw_amount, extract):
     if(balance > 0):
@@ -58,7 +60,7 @@ def extract_method(balance, /, extract):
         print(f"\nSaldo atual: R$ {balance:.2f}")
 
 
-def create_user(users: dict):
+def create_user(users: dict, user_count):
     has_duplict_cpf = False
     name = input("\nDigite o nome do usuário: ")
     birth_date = input("Digite a data de nascimento(dia/mes/ano): ")
@@ -89,11 +91,31 @@ def create_user(users: dict):
         "cpf" : cpf_new,
         "adress" : adress
     }
-    users[name] = new_user
+    users["user" + f"_{user_count}"] = new_user
     print(f"\nUsuário {name} criado com sucesso!")
 
-def create_account():
-    print("asdasdfa")
+def create_account(accounts: dict, users: dict, account_count):
+    user_account = ""
+    while True:
+        cpf_user = input("Digite o CPF do usuário em que a conta será cadastrada: ")
+        for user_data in users.values():
+            if(user_data["cpf"] == cpf_user):
+                user_account = user_data
+                new_account = {
+                    "agency" : "0001",
+                    "account_number" : account_count,
+                    "user" : user_account
+                }
+                accounts["account" + f"_{account_count}"] = new_account
+                print(f"\nConta vinculada ao usuário {user_account["name"]} com sucesso!")
+            
+        if(user_account == ""):
+            print("Usuário não encontrado!")
+
+        else:
+            break
+
+
 
 while True:
     print(
@@ -125,10 +147,16 @@ while True:
         extract = result_deposit[1]
 
     elif(menu_option == 3):
-        extract_method(balance, extract = extract)
+        result = extract_method(balance, extract = extract)
+        print(result)
 
     elif(menu_option == 4):
-        create_user(users)
+        create_user(users, user_count)
+        user_count += 1
+
+    elif(menu_option == 5):
+        create_account(accounts, users, account_count)
+        account_count += 1
 
     elif(menu_option == 0):
         print("Até a próxima!!!")
